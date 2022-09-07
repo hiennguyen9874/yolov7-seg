@@ -4,6 +4,11 @@ This implimentation is based on [yolov7](https://github.com/WongKinYiu/yolov7/tr
 
 ## Install
 
+
+- [TensorRT OSS Plugin](https://github.com/hiennguyen9874/TensorRT)
+
+- [onnx-graphsurgeon](https://github.com/NVIDIA/TensorRT/tree/main/tools/onnx-graphsurgeon)
+
 ## Usage
 
 ### Download model
