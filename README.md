@@ -17,15 +17,15 @@ This implimentation is based on [yolov7](https://github.com/WongKinYiu/yolov7/tr
 
 #### Export ONNX
 
-- `python3 segment/export.py --data ./data/coco.yaml --weights ./weights/yolov7-seg.pt --batch-size 1 --device cpu --simplify --opset 14 --workspace 8 --iou-thres 0.65 --conf-thres 0.35 --include onnx --end2end --cleanup --dynamic-batch --roi-align --mask-resolution 96`
+- `python3 segment/export.py --data ./data/coco.yaml --weights ./weights/yolov7-seg.pt --batch-size 1 --device cpu --simplify --opset 14 --workspace 8 --iou-thres 0.65 --conf-thres 0.35 --include onnx --end2end --cleanup --dynamic-batch --roi-align`
 
 - [scripts](tools/Yolov7onnx_mask-roialign.ipynb)
 
 #### Export TensorRT
 
-- `python3 segment/export.py --data ./data/coco.yaml --weights ./weights/yolov7-seg.pt --batch-size 1 --device cpu --simplify --opset 14 --workspace 8 --iou-thres 0.65 --conf-thres 0.35 --include onnx --end2end --trt --cleanup --dynamic-batch --roi-align --mask-resolution 96`
+- `python3 segment/export.py --data ./data/coco.yaml --weights ./weights/yolov7-seg.pt --batch-size 1 --device cpu --simplify --opset 14 --workspace 8 --iou-thres 0.65 --conf-thres 0.35 --include onnx --end2end --trt --cleanup --dynamic-batch --roi-align`
 
-- `CUDA_VISIBLE_DEVICES=1 /usr/src/tensorrt/bin/trtexec --onnx=./weights/yolov7-seg.onnx --saveEngine=./weights/yolov7-seg-nms.trt --workspace=8192 --fp16 --minShapes=images:1x3x640x640 --optShapes=images:1x3x640x640 --maxShapes=images:8x3x640x640 --shapes=images:1x3x640x640`
+- `/usr/src/tensorrt/bin/trtexec --onnx=./weights/yolov7-seg.onnx --saveEngine=./weights/yolov7-seg-nms.trt --workspace=8192 --fp16 --minShapes=images:1x3x640x640 --optShapes=images:1x3x640x640 --maxShapes=images:8x3x640x640 --shapes=images:1x3x640x640`
 
 - [scripts](tools/YOLOv7trt_mask-roialign.ipynb)
 
@@ -41,6 +41,6 @@ This implimentation is based on [yolov7](https://github.com/WongKinYiu/yolov7/tr
 
 - `python3 segment/export.py --data ./data/coco.yaml --weights ./weights/yolov7-seg.pt --batch-size 1 --device cpu --simplify --opset 14 --workspace 8 --iou-thres 0.65 --conf-thres 0.35 --include onnx --end2end --trt --cleanup --dynamic-batch`
 
-- `CUDA_VISIBLE_DEVICES=1 /usr/src/tensorrt/bin/trtexec --onnx=./weights/yolov7-seg.onnx --saveEngine=./weights/yolov7-seg-nms.trt --workspace=8192 --fp16 --minShapes=images:1x3x640x640 --optShapes=images:1x3x640x640 --maxShapes=images:8x3x640x640 --shapes=images:1x3x640x640`
+- `/usr/src/tensorrt/bin/trtexec --onnx=./weights/yolov7-seg.onnx --saveEngine=./weights/yolov7-seg-nms.trt --workspace=8192 --fp16 --minShapes=images:1x3x640x640 --optShapes=images:1x3x640x640 --maxShapes=images:8x3x640x640 --shapes=images:1x3x640x640`
 
 - [scripts](tools/YOLOv7trt_mask.ipynb)
