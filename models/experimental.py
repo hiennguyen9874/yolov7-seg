@@ -1123,7 +1123,7 @@ class ONNX_TRT_ROIALIGN2(nn.Module):
         self.mask_resolution = mask_resolution
         self.pooler_scale = pooler_scale
         self.sampling_ratio = sampling_ratio
-        self.image_size = 640
+        self.image_size = max_wh
         self.roi_align_type = 2  # 1, or 2
 
         self.background_class = (-1,)
