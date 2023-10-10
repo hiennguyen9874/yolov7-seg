@@ -223,17 +223,17 @@ def export_onnx(
                 max_wh=max(image_size),
             )
 
+    model.to(device)
+
     torch.onnx.export(
-        model.cpu()
-        if (dynamic or dynamic_batch)
-        else model,  # --(dynamic or dynamic_batch) only compatible with cpu
-        im.cpu() if (dynamic or dynamic_batch) else im,
+        model,
+        im,
         f,
         verbose=False,
         opset_version=opset,
-        # training=torch.onnx.TrainingMode.TRAINING if train else torch.onnx.TrainingMode.EVAL,
-        # do_constant_folding=not train,
-        do_constant_folding=False,
+        training=torch.onnx.TrainingMode.TRAINING if train else torch.onnx.TrainingMode.EVAL,
+        do_constant_folding=not train,
+        # do_constant_folding=False,
         input_names=["images"],
         output_names=output_names,
         dynamic_axes=dynamic_axes,
