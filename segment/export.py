@@ -64,7 +64,8 @@ if str(ROOT) not in sys.path:
 if platform.system() != "Windows":
     ROOT = Path(os.path.relpath(ROOT, Path.cwd()))  # relative
 
-from models.experimental import attempt_load, End2End, End2EndRoialign
+from models.experimental import attempt_load
+from models.end2end import End2End, End2EndRoialign
 from models.yolo import Detect, IDetect
 from utils.dataloaders import LoadImages
 from utils.general import (
@@ -144,6 +145,7 @@ def export_onnx(
     image_size,
     cleanup,
     roi_align,
+    roi_align_type,
     prefix=colorstr("ONNX:"),
 ):
     # YOLOv5 ONNX export
@@ -209,6 +211,7 @@ def export_onnx(
                 device=device,
                 trt=trt,
                 max_wh=max(image_size),
+                roi_align_type=roi_align_type,
             )
         else:
             model = End2End(
@@ -316,6 +319,7 @@ def run(
     trt=False,
     cleanup=False,
     roi_align=False,
+    roi_align_type=0,
 ):
     t = time.time()
     include = [x.lower() for x in include]  # to lowercase
@@ -414,6 +418,7 @@ def run(
             sampling_ratio=sampling_ratio,
             image_size=imgsz,
             roi_align=roi_align,
+            roi_align_type=roi_align_type,
         )
     if xml:  # OpenVINO
         raise NotImplementedError
@@ -501,6 +506,12 @@ def parse_opt():
     )
     parser.add_argument(
         "--roi-align", action="store_true", help="ONNX: Crop And Resize mask using roialign"
+    )
+    parser.add_argument(
+        "--roi-align-type",
+        type=int,
+        default=0,
+        help="ONNX: Roialign type, 0: RoiAlign, 1: RoIAlignDynamic_TRT, 2: RoIAlign2Dynamic_TRT",
     )
     opt = parser.parse_args()
     print_args(vars(opt))
